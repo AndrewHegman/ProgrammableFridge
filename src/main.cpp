@@ -1,9 +1,23 @@
 #include <Arduino.h>
+#include <TemperatureWatcher.h>
+
+float GetTemperature(void){
+  static float temp;
+  while(Serial.available()){
+    temp = (float)Serial.readString().toFloat();
+    Serial.println("Temperature set to " + String(temp));
+  }
+  return temp;
+}
+
+TemperatureWatcher tempWatcher(GetTemperature, millis, 50.0f);
 
 void setup() {
-  // put your setup code here, to run once:
+  Serial.begin(9600);
+  tempWatcher.setUpdateDelayMilliseconds(1000);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  tempWatcher.update();
 }
+
