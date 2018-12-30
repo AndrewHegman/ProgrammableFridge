@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 class TemperatureWatcher{
     public:
         typedef enum{
@@ -23,15 +25,17 @@ class TemperatureWatcher{
         **/
         TemperatureAlarm_t alarm();
 
-        /**
-         * Time (in ms) to wait before updating
-         * alarm status
-        **/
-        uint64_t updateDelay;
+        void setUpdateDelaySeconds(uint64_t s);
+        uint64_t getUpdateDelaySeconds();
 
+        void setUpdateDelayMilliseconds(uint64_t ms);
+        uint64_t getUpdateDelayMilliseconds();
+
+        void setUpdateDelayMicroseconds(uint64_t us);
+        uint64_t getUpdateDelayMicroseconds();
         
     private:
-        TemperatureAlarm_t alrm;
+        TemperatureAlarm_t temperatureAlarm;
         int8_t targetTemperature;
 
         /**
@@ -41,6 +45,12 @@ class TemperatureWatcher{
         void update();
 
         int64_t (*getTemperature)(void);
+
+        /**
+         * Time (in ms) to wait before updating
+         * alarm status
+        **/
+        uint64_t updateDelay;
 
         /**
          * Return high threshold temperature
