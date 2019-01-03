@@ -93,9 +93,6 @@ class LinkedList{
         int _size;
 };
 
-#include "LinkedList.h"
-#include <stdlib.h>
-
 template<typename T>
 LinkedList<T>::LinkedList(){
     root = NULL;
@@ -105,7 +102,7 @@ LinkedList<T>::LinkedList(){
 
 template<typename T>
 LinkedList<T>::~LinkedList(){
-    
+    // clear();
 }
 
 template<typename T>
@@ -113,38 +110,37 @@ void LinkedList<T>::add(T data, int index){
     Node<T>* newNode = new Node<T>;
     newNode->data = data;
 
-    
-    if(index == -1){
+    if(!root){
 
-        // Add node to end of list
-        if(root){
+        // Root has not been created yet
+        newNode->next = NULL;
+        root = newNode;
+        last = newNode;
+        _size++;
 
-            // Root node has already been created
+    }
+    else{
+
+        if(index == -1){
+
+            // Add node to end of list
             newNode->next = getNode(index);
             last->next = newNode;
             last = newNode;
             _size++;
 
-        }else{
-
-            // Root node hasn't been created yet
-            newNode->next = NULL;
-            root = newNode;
-            last = newNode;
-            _size++;
-
-        }
-    }else{
-
-        // Add node at specified index
-        if(index == 0){
-
-            // Add node at beginning of list, replacing root
+        } 
+        
+        else if(index == 0){
+            
+            // Add node at beginning of list
             newNode->next = root;
             root = newNode;
             _size++;
+        
+        }
 
-        }else{
+        else{
 
             // Add node at specified index
             // printf("\n\nSize: %d\nIndex: %d\nData: %d\n\tBefore: %d\n\tAfter: %d\n\n", _size, index, data, getNode(index-1)->data, getNode(index)->data);
@@ -153,7 +149,6 @@ void LinkedList<T>::add(T data, int index){
             _size++;
 
         }
-        getNode(index);
     }
 }
 
@@ -192,7 +187,7 @@ LinkedList<T>::Node<T>* LinkedList<T>::getNode(int index) const {
     // Take care of a few low-hanging fruit
     if(index == 0) return root;
     if(index == _size) return last;
-    if(index < 0 || index > 0) return NULL;
+    if(index < 0 || index > _size) return NULL;
 
     int currentIndex = 0;
     Node<T>* currentNode = root;
