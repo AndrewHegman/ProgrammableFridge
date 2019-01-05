@@ -36,8 +36,11 @@ void setup() {
 
   menuScreen_t currentTemperatureScreen;
   
-  currentTemperatureScreen.text.add(String("Curr Temp: ") + String(*currentTemperature), 0);
-  currentTemperatureScreen.text.add(String("Target: ") + String(*targetTemperature), 1);
+  String currTempStr = String("Curr Temp: ") + String(*currentTemperature);
+  String currTargetStr = String("Target: ") + String(*targetTemperature);
+
+  currentTemperatureScreen.text.add(&currTempStr, 0);
+  currentTemperatureScreen.text.add(&currTargetStr, 1);
   lcdMenu.RegisterMenuScreen(currentTemperatureScreen);
 }
 
@@ -57,15 +60,14 @@ void loop() {
       break;
   }
   WriteToDisplay(lcdMenu.current());
-  // WriteToDisplay(lcdMenu.current());
 }
 
 void WriteToDisplay(menuScreen_t menu){
   lcd.setCursor(0, 0);
-  lcd.print(menu.text.get(0));
+  lcd.print(String("Curr Temp: ") + String(*currentTemperature));
 
   lcd.setCursor(0, 1);
-  lcd.print(menu.text.get(1));
+  lcd.print(String("Target: ") + String(*targetTemperature));
 }
 
 float GetTemperature(void){

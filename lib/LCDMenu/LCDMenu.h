@@ -8,7 +8,7 @@
 #include <Arduino.h>
 
 struct menuScreen_t {
-    LinkedList<String> text;
+    LinkedList<const String * const> text;
 };
 
 class LCDMenu{

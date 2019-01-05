@@ -11,6 +11,9 @@ class LinkedList{
         struct Node{
             NodeT data;
             Node<NodeT> *next;
+
+            Node(NodeT _data=NULL) : data(_data){}
+
         };
         LinkedList();
         ~LinkedList();
@@ -24,7 +27,7 @@ class LinkedList{
          *        the end. If not provided, node 
          *        will be added to the end.
         **/
-        void add(T data, int index = -1);
+        void add(const T data, int index = -1);
 
         /**
          * \brief Return size of list
@@ -106,9 +109,9 @@ LinkedList<T>::~LinkedList(){
 }
 
 template<typename T>
-void LinkedList<T>::add(T data, int index){
-    Node<T>* newNode = new Node<T>;
-    newNode->data = data;
+void LinkedList<T>::add(const T data, int index){
+    Node<T>* newNode = new Node<T>(data);
+    // newNode->data = data;
 
     if(!root){
 
