@@ -35,10 +35,6 @@ TemperatureWatcher::TemperatureAlarm_t TemperatureWatcher::update(){
     return temperatureAlarm;
 }
 
-float TemperatureWatcher::getCurrentTemperature(){
-    return currentTemperature;
-}
-
 void TemperatureWatcher::setUpdateDelaySeconds(unsigned long s){
     updateDelay = s * 1000.0L;
 }
@@ -63,3 +59,20 @@ unsigned long  TemperatureWatcher::getUpdateDelayMicroseconds(){
 void TemperatureWatcher::setTargetTemperature(float temp){
     targetTemperature = temp;
 }
+
+float TemperatureWatcher::GetTargetTemperature(){
+    return targetTemperature;
+}
+
+float* TemperatureWatcher::GetTargetTemperatureInstance(){
+    return &targetTemperature;
+}
+
+float TemperatureWatcher::getCurrentTemperature(){
+    return currentTemperature;
+}
+
+float* TemperatureWatcher::GetCurrentTemperatureInstance(){
+    return &currentTemperature;
+}
+

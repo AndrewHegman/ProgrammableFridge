@@ -5,8 +5,11 @@
 #define LCD_NUMBER_OF_ROWS  (16)
 
 #include "LinkedList.h"
+#include <Arduino.h>
 
-typedef struct menu_screen { char text[LCD_NUMBER_OF_LINES][LCD_NUMBER_OF_ROWS]; };
+struct menuScreen_t {
+    LinkedList<String> text;
+};
 
 class LCDMenu{
     public:
@@ -15,27 +18,30 @@ class LCDMenu{
         /**
          * Return the current menu screen
          */
-        menu_screen current();
+        menuScreen_t current();
 
         /**
          * Advance to the next menu screen
          */
-        menu_screen next();
+        menuScreen_t next();
         
         /**
          *  Go back to the previous menu screen
          */
-        menu_screen previous();
+        menuScreen_t previous();
         
         /**
          * The action to be taken depends on the
          * current menu screen.
          */
-        menu_screen select();
+        menuScreen_t select();
 
         /**
          * \brief Register a new menu screen to be displayed.
-         *        Screens are displayed numerically in order.
+         * Screens are displayed numerically in order.
+         * This allows the select button to advance to
+         * a new screen that may or may not be in 
+         * numerical order.
          * 
          * \param menu The text to be displayed in this screen
          * \param index The order in which to display this screen
@@ -44,7 +50,16 @@ class LCDMenu{
          *               Select button presses can be ignored 
          *               by setting this parameter to 'index'
          */
-        void RegisterMenuScreen(menu_screen menu, uint8_t index, uint8_t select);
+        void RegisterMenuScreen(menuScreen_t menu, uint8_t index, uint8_t select);
+
+        /**
+         * \brief Register a new menu screen to be displayed.
+         * Screens will be displayed numerically in order.
+         * 
+         * \param menu The text to be displayed in this screen
+         * \param index The order in which to display this screen
+         */
+        void RegisterMenuScreen(menuScreen_t menu, uint8_t index = -1);
 
         /**
          * \brief Attempts to remove a menu screen at given index.
@@ -65,7 +80,7 @@ class LCDMenu{
         /**
          * \brief Think of this like a vector of all the menu screens
          */
-        LinkedList<menu_screen>* menuScreens;
+        LinkedList<menuScreen_t>* menuScreens;
         
         /**
          * This dictionary maintains what screen

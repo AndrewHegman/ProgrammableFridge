@@ -9,9 +9,11 @@ const int lcdD7  = 11;
 const int lcdD6  = 10;
 const int lcdD5  = 9;
 const int lcdD4  = 8;
+float* currentTemperature = NULL;
+float* targetTemperature = NULL;
 
 float GetTemperature(void);
-void WriteToDisplay(String, String);
+void WriteToDisplay(menuScreen_t menu);
 
 TemperatureWatcher tempWatcher(GetTemperature, millis);
 LiquidCrystal lcd(lcdRS, lcdE, lcdD4, lcdD5, lcdD6, lcdD7);
@@ -29,6 +31,14 @@ void setup() {
 
   // Set up LCD
   lcd.begin(LCD_NUMBER_OF_ROWS, LCD_NUMBER_OF_LINES);
+  currentTemperature = tempWatcher.GetCurrentTemperatureInstance();
+  targetTemperature = tempWatcher.GetTargetTemperatureInstance();
+
+  menuScreen_t currentTemperatureScreen;
+  
+  currentTemperatureScreen.text.add(String("Curr Temp: ") + String(*currentTemperature), 0);
+  currentTemperatureScreen.text.add(String("Target: ") + String(*targetTemperature), 1);
+  lcdMenu.RegisterMenuScreen(currentTemperatureScreen);
 }
 
 void loop() {
@@ -46,17 +56,16 @@ void loop() {
       digitalWrite(LED_BUILTIN, LOW);
       break;
   }
-  WriteToDisplay(String("Curr Temp: ") + String(tempWatcher.getCurrentTemperature()), 
-                 "<-     +      ->");
+  WriteToDisplay(lcdMenu.current());
   // WriteToDisplay(lcdMenu.current());
 }
 
-void WriteToDisplay(String line1, String line2){
+void WriteToDisplay(menuScreen_t menu){
   lcd.setCursor(0, 0);
-  lcd.print(line1);
+  lcd.print(menu.text.get(0));
 
   lcd.setCursor(0, 1);
-  lcd.print(line2);
+  lcd.print(menu.text.get(1));
 }
 
 float GetTemperature(void){

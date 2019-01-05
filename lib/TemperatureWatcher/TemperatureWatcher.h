@@ -65,6 +65,12 @@ class TemperatureWatcher{
          */
         float getCurrentTemperature();
 
+        float* GetCurrentTemperatureInstance();
+
+        float GetTargetTemperature();
+
+        float* GetTargetTemperatureInstance();
+
         /**
          * Check current temperature and update
          * alarm status as necessary

@@ -1,20 +1,20 @@
 #include "LCDMenu.h"
 
 LCDMenu::LCDMenu(){
-    LinkedList<menu_screen>* menuScreens = new LinkedList<menu_screen>;
-    LinkedList<uint8_t>* selectDictionary = new LinkedList<uint8_t>;
+    menuScreens = new LinkedList<menuScreen_t>;
+    selectDictionary = new LinkedList<uint8_t>;
 
     currentScreen = 0;
 }
 
-menu_screen LCDMenu::current(){
+menuScreen_t LCDMenu::current(){
     return menuScreens->get(currentScreen);
 }
 
 /**
  * Advance to the next menu screen
  */
-menu_screen LCDMenu::next(){
+menuScreen_t LCDMenu::next(){
     currentScreen++;
     return menuScreens->get(currentScreen); 
 }
@@ -22,7 +22,7 @@ menu_screen LCDMenu::next(){
 /**
  *  Go back to the previous menu screen
  */
-menu_screen LCDMenu::previous(){
+menuScreen_t LCDMenu::previous(){
     currentScreen--;
     return menuScreens->get(currentScreen);
 }
@@ -31,17 +31,18 @@ menu_screen LCDMenu::previous(){
  * The action to be taken depends on the
  * current menu screen.
  */
-menu_screen LCDMenu::select(){
+menuScreen_t LCDMenu::select(){
     return menuScreens->get(selectDictionary->get(currentScreen));
 }
 
-/**
- * Register a new menu screen to be displayed.
- * Screens are displayed numerically in order.
- */
-void LCDMenu::RegisterMenuScreen(menu_screen menu, uint8_t index, uint8_t select){
+
+void LCDMenu::RegisterMenuScreen(menuScreen_t menu, uint8_t index, uint8_t select){
     menuScreens->add(menu, index);
     selectDictionary->add(index, select);
+}
+
+void LCDMenu::RegisterMenuScreen(menuScreen_t menu, uint8_t index){
+    menuScreens->add(menu);
 }
 
 uint8_t LCDMenu::length(){
