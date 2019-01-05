@@ -1,18 +1,21 @@
 #ifndef LCD_MENU_H_
 #define LCD_MENU_H_
 
-#define NUMBER_OF_LINES (2)
-#define NUMBER_OF_ROWS  (16)
+#define LCD_NUMBER_OF_LINES (2)
+#define LCD_NUMBER_OF_ROWS  (16)
 
 #include "LinkedList.h"
 
-typedef struct menu_screen { char[NUMBER_OF_LINES][NUMBER_OF_ROWS]; };
+typedef struct menu_screen { char text[LCD_NUMBER_OF_LINES][LCD_NUMBER_OF_ROWS]; };
 
 class LCDMenu{
     public:
         LCDMenu();
 
-        uint8_t currentScreen;
+        /**
+         * Return the current menu screen
+         */
+        menu_screen current();
 
         /**
          * Advance to the next menu screen
@@ -72,6 +75,8 @@ class LCDMenu{
          * lingo).
          */
         LinkedList<uint8_t>* selectDictionary;
+
+        uint8_t currentScreen;
 
 };
 

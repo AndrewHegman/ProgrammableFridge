@@ -7,6 +7,10 @@ LCDMenu::LCDMenu(){
     currentScreen = 0;
 }
 
+menu_screen LCDMenu::current(){
+    return menuScreens->get(currentScreen);
+}
+
 /**
  * Advance to the next menu screen
  */
