@@ -14,11 +14,11 @@ TemperatureWatcher::TemperatureWatcher(float (*temperatureGetter)(void), unsigne
     currentTemperature = getTemperature();
 }
 
-TemperatureWatcher::TemperatureAlarm_t TemperatureWatcher::alarm(){
+TemperatureWatcher::TemperatureAlarm_t TemperatureWatcher::Alarm(){
     return temperatureAlarm;
 }
 
-TemperatureWatcher::TemperatureAlarm_t TemperatureWatcher::update(){
+TemperatureWatcher::TemperatureAlarm_t TemperatureWatcher::Update(){
     if(lastUpdateTime + updateDelay <=  getTime()){
         lastUpdateTime = getTime();
         currentTemperature = getTemperature();
@@ -35,32 +35,32 @@ TemperatureWatcher::TemperatureAlarm_t TemperatureWatcher::update(){
     return temperatureAlarm;
 }
 
-void TemperatureWatcher::setUpdateDelaySeconds(unsigned long s){
+void TemperatureWatcher::SetUpdateDelaySeconds(unsigned long s){
     updateDelay = s * 1000.0L;
 }
-unsigned long  TemperatureWatcher::getUpdateDelaySeconds(){
+unsigned long  TemperatureWatcher::GetUpdateDelaySeconds(){
     return updateDelay / 1000.0L;
 }
 
-void  TemperatureWatcher::setUpdateDelayMilliseconds(unsigned long ms){
+void  TemperatureWatcher::SetUpdateDelayMilliseconds(unsigned long ms){
     updateDelay = ms;
 }
-unsigned long  TemperatureWatcher::getUpdateDelayMilliseconds(){
+unsigned long  TemperatureWatcher::GetUpdateDelayMilliseconds(){
     return updateDelay;
 }
 
-void  TemperatureWatcher::setUpdateDelayMicroseconds(unsigned long us){
+void  TemperatureWatcher::SetUpdateDelayMicroseconds(unsigned long us){
     updateDelay = us / 1000.0L;
 }
-unsigned long  TemperatureWatcher::getUpdateDelayMicroseconds(){
+unsigned long  TemperatureWatcher::GetUpdateDelayMicroseconds(){
     return updateDelay * 1000.0L;
 }
 
-void TemperatureWatcher::setTargetTemperature(float temp){
+void TemperatureWatcher::SetTargetTemperature(float temp){
     targetTemperature = temp;
 }
 
-float TemperatureWatcher::GetTargetTemperature(){
+float TemperatureWatcher::GetTargetTemperature() const {
     return targetTemperature;
 }
 
@@ -68,7 +68,7 @@ float* TemperatureWatcher::GetTargetTemperatureInstance(){
     return &targetTemperature;
 }
 
-float TemperatureWatcher::getCurrentTemperature(){
+float TemperatureWatcher::GetCurrentTemperature() const {
     return currentTemperature;
 }
 

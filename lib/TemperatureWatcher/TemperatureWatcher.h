@@ -48,26 +48,26 @@ class TemperatureWatcher{
         /**
          * Get the current status of the alarm
         **/
-        TemperatureAlarm_t alarm();
+        TemperatureAlarm_t Alarm();
 
-        void setUpdateDelaySeconds(unsigned long s);
-        unsigned long getUpdateDelaySeconds();
+        void SetUpdateDelaySeconds(unsigned long s);
+        unsigned long GetUpdateDelaySeconds();
 
-        void setUpdateDelayMilliseconds(unsigned long ms);
-        unsigned long getUpdateDelayMilliseconds();
+        void SetUpdateDelayMilliseconds(unsigned long ms);
+        unsigned long GetUpdateDelayMilliseconds();
 
-        void setUpdateDelayMicroseconds(unsigned long us);
-        unsigned long getUpdateDelayMicroseconds();
+        void SetUpdateDelayMicroseconds(unsigned long us);
+        unsigned long GetUpdateDelayMicroseconds();
         
         /**
          * Return current temperature from last reading
          * of temperature sensor
          */
-        float getCurrentTemperature();
+        float GetCurrentTemperature() const ;
 
         float* GetCurrentTemperatureInstance();
 
-        float GetTargetTemperature();
+        float GetTargetTemperature() const ;
 
         float* GetTargetTemperatureInstance();
 
@@ -75,10 +75,9 @@ class TemperatureWatcher{
          * Check current temperature and update
          * alarm status as necessary
         **/
-        TemperatureAlarm_t update();
+        TemperatureAlarm_t Update();
 
-        void setTargetTemperature(float temp);
-
+        void SetTargetTemperature(float temp);
     private:
         /**
          * \brief Maintains the state of the alarm
