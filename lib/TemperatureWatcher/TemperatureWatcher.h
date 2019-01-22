@@ -77,6 +77,11 @@ class TemperatureWatcher{
         **/
         TemperatureAlarm_t Update();
 
+        // Returns true if temperature has changed
+        // by at least a certain threshold since
+        // last time update() was called
+        bool TemperatureChanged();
+
         void SetTargetTemperature(float temp);
     private:
         /**
@@ -96,6 +101,12 @@ class TemperatureWatcher{
          * Last reading from temperature sensor
          */
         float currentTemperature;
+
+        /**
+         * Previous reading from temperature sensor
+         */
+        float lastTemperature;
+
         /**
          * The user will be given the option
          * to manually set the high/low threshold
@@ -130,20 +141,22 @@ class TemperatureWatcher{
         **/
         unsigned long updateDelay;
 
+        bool temperatureChanged;
+
         /**
          * \brief Return high threshold temperature
         **/
         inline float getHighTemperature(){
-            if(manualThresholdTemperatures) return highTargetTemperature;
-            else return targetTemperature * 1.1f;
+            /*if(manualThresholdTemperatures) return highTargetTemperature;
+            else */return targetTemperature * 1.1f;
         }
 
         /**
          * Return low threshold temperature
         **/
         inline float getLowTemperature(){
-            if(manualThresholdTemperatures) return lowTargetTemperature;
-            else return targetTemperature * 0.9f;
+            /*if(manualThresholdTemperatures) return lowTargetTemperature;
+            else */return targetTemperature * 0.9f;
         }
 
     

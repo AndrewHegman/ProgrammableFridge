@@ -1,5 +1,7 @@
 #include "TemperatureWatcher.h"
 
+#define ABS(val)     (val < 0 ? (-1 * val) : val)
+
 TemperatureWatcher::TemperatureWatcher(float (*temperatureGetter)(void), unsigned long (*timeGetter)(void)){
     getTemperature = temperatureGetter;
     getTime = timeGetter;
@@ -12,6 +14,8 @@ TemperatureWatcher::TemperatureWatcher(float (*temperatureGetter)(void), unsigne
     lastUpdateTime = 0;
 
     currentTemperature = getTemperature();
+    lastTemperature = 0.0f;
+    temperatureChanged = true;
 }
 
 TemperatureWatcher::TemperatureAlarm_t TemperatureWatcher::Alarm(){
@@ -22,6 +26,12 @@ TemperatureWatcher::TemperatureAlarm_t TemperatureWatcher::Update(){
     if(lastUpdateTime + updateDelay <=  getTime()){
         lastUpdateTime = getTime();
         currentTemperature = getTemperature();
+        
+        if(ABS(currentTemperature - lastTemperature) > 0.1f){
+            temperatureChanged = true;
+        }
+        lastTemperature = currentTemperature;
+
         if(currentTemperature > getHighTemperature()){
             temperatureAlarm = TemperatureAlarm_t::alarmHigh;
         }
@@ -76,3 +86,8 @@ float* TemperatureWatcher::GetCurrentTemperatureInstance(){
     return &currentTemperature;
 }
 
+bool TemperatureWatcher::TemperatureChanged(){
+    bool retval = temperatureChanged;
+    temperatureChanged = false;
+    return retval;
+}
